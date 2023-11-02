@@ -330,7 +330,9 @@ class TimezoneComponent(Component):
         """
         Given a tzinfo class, use known APIs to determine TZID, or use tzname.
         """
-        if tzinfo is None or (not allowUTC and tzinfo_eq(tzinfo, utc)):
+        if tzinfo is None or (
+            not allowUTC and (tzinfo is datetime.timezone.utc or tzinfo_eq(tzinfo, utc))
+        ):
             # If tzinfo is UTC, we don't need a TZID
             return None
         # try PyICU's tzid key
